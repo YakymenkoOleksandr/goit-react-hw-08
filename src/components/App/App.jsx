@@ -2,6 +2,7 @@ import ContactForm from '../ContactForm/ContactForm.jsx';
 import SearchBox from '../SearchBox/SearchBox.jsx';
 import ContactList from '../ContactList/ContactList.jsx';
 import initialsContacts from './ContactList.json';
+import css from './App.module.css';
 import { useState, useEffect } from 'react';
 import * as yup from 'yup';
 export default function App() {
@@ -46,7 +47,7 @@ export default function App() {
 
   return (
     <>
-      <h1>Phonebook </h1>
+      <h1 className={css.nameOfApp}>Phonebook </h1>
       <ContactForm
         addContact={addContact}
         validationSchema={validationSchema}
