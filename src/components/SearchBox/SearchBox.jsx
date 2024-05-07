@@ -1,7 +1,7 @@
 import css from './SearchBox.module.css';
 import { useId } from "react";
 import { Formik, Form, Field } from 'formik';
-export default function SearchBox() {
+export default function SearchBox({filter, setFilter}) {
     
     const searchFieldId = useId();
     return (
@@ -14,6 +14,8 @@ export default function SearchBox() {
                     name="search"
                     className={css.field}
                         id={searchFieldId}
+                        value={filter}
+                        onChange={(e) => setFilter(e.target.value)}
                     />
                 </Form>
             </Formik>
