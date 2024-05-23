@@ -9,8 +9,10 @@ import {
   deleteContact,
   selectContacts,
 } from '../../redux/contactsSlice';
-import { setNameFilter, selectNameFilter } from '../../redux/filtersSlice';
-import * as yup from 'yup';
+
+import { selectNameFilter } from '../../redux/filtersSlice.js'
+import { setNameFilter } from '../../redux/filtersSlice.js';
+
 
 export default function App() {
   // Використовуємо селектори для доступу до стану
@@ -22,19 +24,6 @@ export default function App() {
   const visibleContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
-  // Валідація форми
-  const validationSchema = yup.object().shape({
-    name: yup
-      .string()
-      .required('Name is required')
-      .min(3, 'Name must be at least 3 characters')
-      .max(50, 'Name must not exceed 50 characters'),
-    phoneNumber: yup
-      .string()
-      .required('Phone number is required')
-      .min(3, 'Phone number must be at least 3 characters')
-      .max(50, 'Phone number must not exceed 50 characters'),
-  });
 
   return (
     <>
@@ -43,7 +32,6 @@ export default function App() {
         addContact={(name, phoneNumber) =>
           dispatch(addContact(name, phoneNumber))
         }
-        validationSchema={validationSchema}
       />
       <SearchBox
         filter={filter}

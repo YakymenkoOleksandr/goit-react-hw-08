@@ -13,7 +13,7 @@ export default function Contact({ contact }) {
           <BsPersonFill /> {contact.name}{' '}
         </li>
         <li className={css.phone}>
-          <FaPhoneAlt /> {contact.number}{' '}
+          <FaPhoneAlt /> {contact.phoneNumber}{' '}
         </li>
       </ul>
       <button className={css.btn} onClick={() => dispatch(deleteContact(contact.id))}>

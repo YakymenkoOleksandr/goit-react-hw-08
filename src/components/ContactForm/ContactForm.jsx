@@ -5,8 +5,9 @@ import { Formik, Form, Field } from 'formik';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addContact } from '../../redux/contactsSlice';
+import * as yup from 'yup';
 
-export default function ContactForm({ validationSchema }) {
+export default function ContactForm() {
   const dispatch = useDispatch();
   const initialValues = {
     name: '',
@@ -22,6 +23,20 @@ const handleSubmit = (values, actions) => {
     dispatch(addContact(values.name, values.phoneNumber));
     actions.resetForm();
   };
+
+    // Валідація форми
+  const validationSchema = yup.object().shape({
+    name: yup
+      .string()
+      .required('Name is required')
+      .min(3, 'Name must be at least 3 characters')
+      .max(50, 'Name must not exceed 50 characters'),
+    phoneNumber: yup
+      .string()
+      .required('Phone number is required')
+      .min(3, 'Phone number must be at least 3 characters')
+      .max(50, 'Phone number must not exceed 50 characters'),
+  });
 
   return (
     <div>
