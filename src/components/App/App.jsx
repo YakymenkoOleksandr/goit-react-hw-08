@@ -1,33 +1,28 @@
 import ContactForm from '../ContactForm/ContactForm.jsx';
 import SearchBox from '../SearchBox/SearchBox.jsx';
 import ContactList from '../ContactList/ContactList.jsx';
-import initialsContacts from './ContactList.json';
 import css from './App.module.css';
-import { useState, useEffect } from 'react';
+// Імпортуємо екшени та селектори
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  addContact,
+  deleteContact,
+  selectContacts,
+} from '../../redux/contactsSlice';
+import { setNameFilter, selectNameFilter } from '../../redux/filtersSlice';
 import * as yup from 'yup';
+
 export default function App() {
-  const [contacts, setContacts] = useState(() => {
-    const storedContacts = localStorage.getItem('contacts');
-    return storedContacts ? JSON.parse(storedContacts) : initialsContacts;
-  });
-  const [filter, setFilter] = useState('');
+  // Використовуємо селектори для доступу до стану
+  const contacts = useSelector(selectContacts);
+  const filter = useSelector(selectNameFilter);
+  const dispatch = useDispatch();
 
-  const addContact = newContact => {
-    setContacts(prevContacts => {
-      return [...prevContacts, newContact];
-    });
-  };
-
-  const deleteContact = contactId => {
-    setContacts(prevContacts => {
-      return prevContacts.filter(contact => contact.id !== contactId);
-    });
-  };
-
+  // Фільтруємо контакти згідно з фільтром
   const visibleContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
-
+  // Валідація форми
   const validationSchema = yup.object().shape({
     name: yup
       .string()
@@ -41,19 +36,23 @@ export default function App() {
       .max(50, 'Phone number must not exceed 50 characters'),
   });
 
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
   return (
     <>
       <h1 className={css.nameOfApp}>Phonebook </h1>
       <ContactForm
-        addContact={addContact}
+        addContact={(name, phoneNumber) =>
+          dispatch(addContact(name, phoneNumber))
+        }
         validationSchema={validationSchema}
       />
-      <SearchBox filter={filter} setFilter={setFilter} />
-      <ContactList contacts={visibleContacts} deleteContact={deleteContact} />
+      <SearchBox
+        filter={filter}
+        setFilter={value => dispatch(setNameFilter(value))}
+      />
+      <ContactList
+        contacts={visibleContacts}
+        deleteContact={contactId => dispatch(deleteContact(contactId))}
+      />
     </>
   );
 }
