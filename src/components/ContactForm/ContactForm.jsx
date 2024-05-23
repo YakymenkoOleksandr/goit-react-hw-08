@@ -1,10 +1,13 @@
 import css from './ContactForm.module.css';
 import { useId } from 'react';
 import { Formik, Form, Field } from 'formik';
-import { nanoid } from 'nanoid';
-import { useState } from 'react';
 
-export default function ContactForm({ addContact, validationSchema }) {
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactsSlice';
+
+export default function ContactForm({ validationSchema }) {
+  const dispatch = useDispatch();
   const initialValues = {
     name: '',
     phoneNumber: '',
@@ -15,9 +18,8 @@ export default function ContactForm({ addContact, validationSchema }) {
   const nameFieldId = useId();
   const phoneNumberFieldId = useId();
 
-  const handleSubmit = (values, actions) => {
-    const id = nanoid();
-    addContact({ id, name: values.name, number: values.phoneNumber });
+const handleSubmit = (values, actions) => {
+    dispatch(addContact(values.name, values.phoneNumber));
     actions.resetForm();
   };
 

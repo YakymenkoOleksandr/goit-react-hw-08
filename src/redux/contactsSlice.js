@@ -6,25 +6,23 @@ const contactsInitialState = {
 };
 
 const contactsSlice = createSlice({
-  // Ім'я слайсу
-  name: 'contact',
-  // Початковий стан редюсера слайсу
+  name: 'contacts',
   initialState: contactsInitialState,
-  // Об'єкт редюсерів
   reducers: {
-    addContact(state, action) {
-      state.items.push(action.payload);
+    addContact: {
+      reducer(state, action) {
+        state.items.push(action.payload);
+      },
+      prepare(name, phoneNumber) {
+        return {
+          payload: {
+            id: nanoid(),
+            name,
+            phoneNumber,
+          },
+        };
+      },
     },
-    prepare(name, phoneNumber) {
-      return {
-        payload: {
-          id: nanoid(),
-          name,
-          phoneNumber,
-        },
-      };
-    },
-
     deleteContact(state, action) {
       const index = state.items.findIndex(
         contact => contact.id === action.payload

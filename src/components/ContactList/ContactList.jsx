@@ -1,9 +1,13 @@
 import Contact from '../Contact/Contact.jsx'
-export default function ContactList({ contacts, deleteContact }) {
+import { useSelector } from 'react-redux';
+import { selectContacts } from '../../redux/contactsSlice';
+
+export default function ContactList() {
+  const contacts = useSelector(selectContacts);
   return (
     <div>
       {contacts.map(contact => (
-        <Contact key={contact.id} contact={contact} deleteContact={deleteContact} />
+        <Contact key={contact.id} contact={contact} />
       ))}
     </div>
   );
