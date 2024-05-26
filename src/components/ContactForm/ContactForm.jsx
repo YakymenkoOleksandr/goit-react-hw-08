@@ -1,11 +1,10 @@
 import css from './ContactForm.module.css';
 import { useId } from 'react';
 import { Formik, Form, Field } from 'formik';
-
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addContact } from '../../redux/contactsSlice';
 import * as yup from 'yup';
+import { addContact } from '../../redux/contactsOps.js';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
@@ -19,12 +18,11 @@ export default function ContactForm() {
   const nameFieldId = useId();
   const phoneNumberFieldId = useId();
 
-const handleSubmit = (values, actions) => {
-    dispatch(addContact(values.name, values.phoneNumber));
-    actions.resetForm();
+  const handleSubmit = (values, { resetForm }) => {
+    dispatch(addContact(values));
+    resetForm();
   };
 
-    // Валідація форми
   const validationSchema = yup.object().shape({
     name: yup
       .string()

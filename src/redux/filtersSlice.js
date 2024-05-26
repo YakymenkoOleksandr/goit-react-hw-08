@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-//Початковий стан filters
+// Початковий стан filters
 const filtersInitialState = {
   name: '',
 };
