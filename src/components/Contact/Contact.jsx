@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { deleteContact } from '../../redux/contactsOps';
+import { deleteContact } from '../../redux/contacts/operations.js';
 import css from './Contact.module.css';
 import { BsPersonFill } from 'react-icons/bs';
 import { FaPhoneAlt } from 'react-icons/fa';
@@ -15,7 +15,7 @@ export default function Contact({ contact }) {
           <BsPersonFill /> {contact.name}
         </li>
         <li className={css.phone}>
-          <FaPhoneAlt /> {contact.phoneNumber || contact.number}
+          <FaPhoneAlt /> {contact.number}
         </li>
       </ul>
       <button className={css.btn} onClick={handleDelete}>

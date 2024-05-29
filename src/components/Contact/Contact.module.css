@@ -12,16 +12,12 @@
 }
 
 .btn {
-    width: 30%;
     height: 20%;
     margin-left: auto;
     margin-top: auto;
     margin-bottom: auto;
 }
 
-.info {
-    margin-right: auto;
-}
 
 .person {
     list-style: none;
@@ -29,4 +25,8 @@
 
 .phone {
     list-style: none;
+}
+
+.info {
+    padding-left: 0;
 }

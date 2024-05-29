@@ -4,13 +4,13 @@ import { Formik, Form, Field } from 'formik';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import * as yup from 'yup';
-import { addContact } from '../../redux/contactsOps.js';
+import { addContact } from '../../redux/contacts/operations';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
   const initialValues = {
     name: '',
-    phoneNumber: '',
+    number: '',
   };
 
   const [submitAttempted, setSubmitAttempted] = useState(false);
@@ -19,6 +19,7 @@ export default function ContactForm() {
   const phoneNumberFieldId = useId();
 
   const handleSubmit = (values, { resetForm }) => {
+    console.log('Submitting form with values:', values); // Логування значень форми
     dispatch(addContact(values));
     resetForm();
   };
@@ -29,7 +30,7 @@ export default function ContactForm() {
       .required('Name is required')
       .min(3, 'Name must be at least 3 characters')
       .max(50, 'Name must not exceed 50 characters'),
-    phoneNumber: yup
+    number: yup
       .string()
       .required('Phone number is required')
       .min(3, 'Phone number must be at least 3 characters')
@@ -59,13 +60,13 @@ export default function ContactForm() {
             <label htmlFor={phoneNumberFieldId}>Number</label>
             <Field
               type="text"
-              name="phoneNumber"
+              name="number"
               className={css.field}
               id={phoneNumberFieldId}
               onBlur={() => setSubmitAttempted(true)}
             />
-            {(submitAttempted || touched.phoneNumber) && errors.phoneNumber && (
-              <div className="error">{errors.phoneNumber}</div>
+            {(submitAttempted || touched.number) && errors.number && (
+              <div className="error">{errors.number}</div>
             )}
             <button type="submit" className={css.btn}>
               Add contact

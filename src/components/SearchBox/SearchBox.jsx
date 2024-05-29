@@ -2,7 +2,8 @@ import css from './SearchBox.module.css';
 import { useId } from 'react';
 import { Formik, Form, Field } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
-import { setNameFilter, selectNameFilter } from '../../redux/filtersSlice';
+import {selectNameFilter} from "../../redux/filters/selectors.js"
+import {setNameFilter} from '../../redux/filters/slise.js';
 
 export default function SearchBox() {
   const searchFieldId = useId();
