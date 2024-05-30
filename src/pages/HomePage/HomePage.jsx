@@ -1,4 +1,4 @@
-import DocumentTitle from '../../components/DocumentTitle';
+import DocumentTitle from '../../components/DocumentTitle/DocumentTitle';
 import css from "../../pages/HomePage/HomePage.module.css"
 
 export default function HomePage() {
