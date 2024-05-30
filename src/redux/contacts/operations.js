@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
@@ -17,12 +18,11 @@ export const addContact = createAsyncThunk(
   'contacts/addContact',
   async ({ name, number }, thunkAPI) => {
     try {
-      console.log('Adding contact:', { name, number }); // Логування даних контакту
       const response = await axios.post('/contacts', { name, number });
-      console.log('Contact added:', response.data); // Логування відповіді сервера
+      toast.success('Contact add successfully');
       return response.data;
     } catch (error) {
-      console.error('Failed to add contact:', error.message); // Логування помилки
+      toast.error('Failed to add contact');
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -33,9 +33,31 @@ export const deleteContact = createAsyncThunk(
   async (contactId, thunkAPI) => {
     try {
       const response = await axios.delete(`/contacts/${contactId}`);
+      toast.success('Contact deleted successfully');
       return response.data;
     } catch (error) {
+      toast.error('Failed to delete contact');
       return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const updateContact = createAsyncThunk(
+  'contacts/updateContact',
+  async ({ id, name, number }, { rejectWithValue }) => {
+    try {
+      const response = await axios.patch(
+        `https://connections-api.herokuapp.com/contacts/${id}`,
+        {
+          name,
+          number,
+        }
+      );
+      toast.success('Contact change successfully');
+      return response.data;
+    } catch (error) {
+      toast.error('Failed to changing contact');
+      return rejectWithValue(error.message);
     }
   }
 );
